@@ -1,0 +1,35 @@
+{
+  "development": {
+    "username": "youtubedb_h964_user",
+    "password": "uFffnEYPDOwbI0QhS4HNC0qitXCy3z6T",
+    "database": "youtubedb_h964",
+    "host": "dpg-csvdtrrv2p9s73cvktg0-a.singapore-postgres.render.com",
+    "dialect": "postgres",
+    "port": 5432,
+    "dialectOptions": {
+      "ssl": true
+    }
+  },
+  "test":  {
+    "username": "youtubedb_h964_user",
+    "password": "uFffnEYPDOwbI0QhS4HNC0qitXCy3z6T",
+    "database": "youtubedb_h964",
+    "host": "dpg-csvdtrrv2p9s73cvktg0-a.singapore-postgres.render.com",
+    "dialect": "postgres",
+    "port": 5432,
+    "dialectOptions": {
+      "ssl": true
+    }
+  },
+  "production":  {
+    "username": "youtubedb_h964_user",
+    "password": "uFffnEYPDOwbI0QhS4HNC0qitXCy3z6T",
+    "database": "youtubedb_h964",
+    "host": "dpg-csvdtrrv2p9s73cvktg0-a.singapore-postgres.render.com",
+    "dialect": "postgres",
+    "port": 5432,
+    "dialectOptions": {
+      "ssl": true
+    }
+  }
+}
