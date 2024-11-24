@@ -211,7 +211,9 @@ const getuserVideos = async function (req, res) {
     // });
 
     const userWithVideos = await userTable.findOne({
-      where: { id: id },
+      // where: { id: id },
+      where: Sequelize.literal(`CAST("User"."id" AS VARCHAR) = '${id}'`),
+
       include:  [
         {
           model: model.BigVideos, // Include associated BigVideos
