@@ -128,7 +128,7 @@ const getuserVideos = async function (req, res) {
     // });
 
     const userWithVideos = await user.findOne({
-      where: { id: id },
+      where: { id:parseInt(id, 10) },
       include: ["bigvideos"], // Include associated videos
     });
 
