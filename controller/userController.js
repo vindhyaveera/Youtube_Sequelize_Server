@@ -223,19 +223,10 @@ const getuserVideos = async function (req, res) {
           model: model.BigVideos, // Include associated BigVideos
           as: "Bigvideosuser",
           required: false, // Optional: Include videos even if there are no matches
-          where: {
-            // Compare with proper casting using Sequelize operators
-            [Op.and]: [
-              Sequelize.where(
-                Sequelize.cast(
-                  Sequelize.col("Bigvideosuser.userid"),
-                  "INTEGER"
-                ),
-                Op.eq,
-                id
-              ),
-            ],
-          },
+          where: Sequelize.literal(
+            `CAST("Bigvideosuser"."userid" AS INTEGER) = ${id}`
+          ),
+
           // Use the correct alias from your associations
         },
       ],
