@@ -1,8 +1,5 @@
 const model = require("../models");
 const userTable = model.User;
-const Sequelize = require("sequelize");
-
-const { Op } = Sequelize;
 
 const bigvideos = model.BigVideos;
 const bcrypt = require("bcrypt");
@@ -199,8 +196,8 @@ const loginUser = async function (req, res) {
 
 const getuserVideos = async function (req, res) {
   try {
-    const { id } = req.params; // Extract the id from the route parameters
-
+    const { id: idParam } = req.params; // Extract the id from the route parameters
+    const id = parseInt(idParam, 10); // Convert the string to an integer
     // const userWithVideos = await userTable.findOne({
     //   where: { id: id },
     //   include: [{
@@ -210,9 +207,7 @@ const getuserVideos = async function (req, res) {
     // });
 
     const userWithVideos = await userTable.findOne({
-      where: {
-        id: Sequelize.cast(id, "integer"), // Explicitly cast the value to integer
-      }, // Match the User by id
+      where: { id: id }, // Match the User by id
       include: [
         {
           model: model.BigVideos, // Include associated BigVideos
