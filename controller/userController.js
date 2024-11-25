@@ -209,8 +209,8 @@ const getuserVideos = async function (req, res) {
       where: { id: id }, // Match the User by id
       include: [
         {
-          model: BigVideos, // Include associated BigVideos
-          as: "bigvideos", // Use the correct alias from your associations
+          model: bigvideos, // Include associated BigVideos
+          as: "Bigvideosuser", // Use the correct alias from your associations
         },
       ],
     });
