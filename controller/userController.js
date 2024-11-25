@@ -1,6 +1,6 @@
 const model = require("../models");
 const userTable = model.User;
-const bigvideos = model.BigVideos;
+const bigvideos=model.BigVideos;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secret = "456372891";
@@ -44,6 +44,7 @@ const createUser = async function (req, res) {
   }
 };
 
+
 const viewAll = async function (req, res) {
   try {
     const response = await userTable.findAll();
@@ -66,6 +67,7 @@ const viewAll = async function (req, res) {
     });
   }
 };
+
 
 const viewOne = async function (req, res) {
   try {
@@ -90,6 +92,8 @@ const viewOne = async function (req, res) {
     });
   }
 };
+
+
 
 const update = async function (req, res) {
   try {
@@ -117,6 +121,7 @@ const update = async function (req, res) {
   }
 };
 
+
 const deleteUser = async function (req, res) {
   try {
     // const { id } = req.params;
@@ -142,6 +147,7 @@ const deleteUser = async function (req, res) {
     });
   }
 };
+
 
 const loginUser = async function (req, res) {
   try {
@@ -193,19 +199,25 @@ const loginUser = async function (req, res) {
   }
 };
 
+
+
 const getuserVideos = async function (req, res) {
   try {
-    // const { id } = req.params; // Extract the id from the route parameters
-    const id = parseInt(req.params.id, 10); // Convert the id to an integer
+    const { id } = req.params; // Extract the id from the route parameters
+
+    // const userWithVideos = await userTable.findOne({
+    //   where: { id: id },
+    //   include: [Bigvideosuser] // Directly referencing an alias or association
+    // });
 
     const userWithVideos = await userTable.findOne({
-      where: { id: id }, // Match the User by id
-      include: [
+      where: { id: id },
+      include:  [
         {
           model: model.BigVideos, // Include associated BigVideos
           as: "Bigvideosuser", // Use the correct alias from your associations
-        },
-      ],
+        }
+      ], // Include associated videos
     });
 
     res.status(200).json({
@@ -221,6 +233,8 @@ const getuserVideos = async function (req, res) {
   }
 };
 
+
+
 // const userWithVideos = await User.findOne({
 //   where: { id: id }, // Match the User by id
 //   include: [
@@ -230,13 +244,19 @@ const getuserVideos = async function (req, res) {
 //     },
 //   ],
 
+
 const getuserShortsVideos = async function (req, res) {
   try {
-    const id = parseInt(req.params.id, 10); // Convert the id to an integer
+    const { id } = req.params; // Extract the id from the route parameters
+
+    // const userWithVideos = await userTable.findOne({
+    //   where: { id: id },
+    //   include: [Bigvideosuser] // Directly referencing an alias or association
+    // });
 
     const userWithVideos = await userTable.findOne({
       where: { id: id },
-      include: [
+      include:  [
         {
           model: model.ShortsVideos, // Include associated BigVideos
           as: "Shortvideosuser", // Use the correct alias from your associations
@@ -256,6 +276,7 @@ const getuserShortsVideos = async function (req, res) {
     });
   }
 };
+
 
 module.exports = {
   createUser,
