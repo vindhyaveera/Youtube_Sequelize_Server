@@ -205,7 +205,7 @@ const getuserVideos = async function (req, res) {
     //   },] // Directly referencing an alias or association
     // });
 
-    const userWithVideos = await User.findOne({
+    const userWithVideos = await userTable.findOne({
       where: { id: id }, // Match the User by id
       include: [
         {
