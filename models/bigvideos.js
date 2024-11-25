@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 
   BigVideos.init(
     {
-      userid: DataTypes.STRING,
+      userid: DataTypes.INTEGER,
       img: DataTypes.STRING,
       name: DataTypes.STRING,
       desc: DataTypes.STRING,
