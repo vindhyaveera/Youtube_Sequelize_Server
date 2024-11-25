@@ -203,18 +203,17 @@ const loginUser = async function (req, res) {
 
 const getuserVideos = async function (req, res) {
   try {
-    const { id } = req.params; // Extract the id from the route parameters
+    // const { id } = req.params; // Extract the id from the route parameters
+    const id = parseInt(req.params.id, 10); // Convert the id to an integer
+
 
     // const userWithVideos = await userTable.findOne({
     //   where: { id: id },
     //   include: [Bigvideosuser] // Directly referencing an alias or association
     // });
 
-    // where: { id: id },
-
     const userWithVideos = await userTable.findOne({
-      where: Sequelize.literal(`CAST(${models.User.rawAttributes.id.field} AS VARCHAR) = '${id}'`),
-
+      where: { id: id },
       include:  [
         {
           model: model.BigVideos, // Include associated BigVideos
@@ -251,6 +250,7 @@ const getuserVideos = async function (req, res) {
 const getuserShortsVideos = async function (req, res) {
   try {
     const { id } = req.params; // Extract the id from the route parameters
+
 
     // const userWithVideos = await userTable.findOne({
     //   where: { id: id },
