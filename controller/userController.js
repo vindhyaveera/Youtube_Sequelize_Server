@@ -198,25 +198,25 @@ const getuserVideos = async function (req, res) {
     // const { id } = req.params; // Extract the id from the route parameters
     const id = parseInt(req.params.id, 10); // Convert the id to an integer
 
-    // const userWithVideos = await userTable.findOne({
-    //   where: { id: id }, // Match the User by id
-    //   include: [
-    //     {
-    //       model:model.BigVideos, // Include associated BigVideos
-    //       as: "bigvideos", // Use the correct alias from your associations
-    //     },
-    //   ],
-    // });
-
     const userWithVideos = await userTable.findOne({
-      where: { id: id },
+      where: { id: id }, // Match the User by id
       include: [
         {
-          model: model.BigVideos,
-          as: "Bigvideosuser",
+          model:model.BigVideos, // Include associated BigVideos
+          as: "bigvideos", // Use the correct alias from your associations
         },
-      ], // Directly referencing an alias or association
+      ],
     });
+
+    // const userWithVideos = await userTable.findOne({
+    //   where: { id: id },
+    //   include: [
+    //     {
+    //       model: model.BigVideos,
+    //       as: "Bigvideosuser",
+    //     },
+    //   ], // Directly referencing an alias or association
+    // });
 
     // const userWithVideos = await userTable.findOne({
     //   where: { id: id },
