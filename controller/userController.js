@@ -197,23 +197,23 @@ const getuserVideos = async function (req, res) {
   try {
     const { id } = req.params; // Extract the id from the route parameters
 
-    const userWithVideos = await userTable.findOne({
-      where: { id: id },
-      include: [{
-        model: model.BigVideos, // Include associated BigVideos
-        as: "Bigvideosuser", // Use the correct alias from your associations
-      },] // Directly referencing an alias or association
-    });
-
-    // const userWithVideos = await User.findOne({
-    //   where: { id: id }, // Match the User by id
-    //   include: [
-    //     {
-    //       model: BigVideos, // Include associated BigVideos
-    //       as: "bigvideos", // Use the correct alias from your associations
-    //     },
-    //   ],
+    // const userWithVideos = await userTable.findOne({
+    //   where: { id: id },
+    //   include: [{
+    //     model: model.BigVideos, // Include associated BigVideos
+    //     as: "Bigvideosuser", // Use the correct alias from your associations
+    //   },] // Directly referencing an alias or association
     // });
+
+    const userWithVideos = await User.findOne({
+      where: { id: id }, // Match the User by id
+      include: [
+        {
+          model: BigVideos, // Include associated BigVideos
+          as: "bigvideos", // Use the correct alias from your associations
+        },
+      ],
+    });
     
     res.status(200).json({
       Message: "Bigvideos listed successfully",
