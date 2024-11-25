@@ -1,8 +1,6 @@
-const { Sequelize } = require("sequelize");
-const { Op } = require("sequelize");
-
 const model = require("../models");
 const userTable = model.User;
+
 const bigvideos = model.BigVideos;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -198,17 +196,9 @@ const loginUser = async function (req, res) {
 
 const getuserVideos = async function (req, res) {
   try {
-    const id = parseInt(req.params.id, 10); // Convert the ID to an integer
-
-    if (isNaN(id)) {
-      return res.status(400).json({
-        message: "Invalid user ID",
-      });
-    }
-
-    // const { id: idParam } = req.params; // Extract the id from the route parameters
-    // const id = parseInt(idParam, 10); // Convert the string to an integer
-    // // const userWithVideos = await userTable.findOne({
+    const { id } = req.params; // Extract the id from the route parameters
+    
+    // const userWithVideos = await userTable.findOne({
     //   where: { id: id },
     //   include: [{
     //     model: model.BigVideos, // Include associated BigVideos
@@ -217,17 +207,11 @@ const getuserVideos = async function (req, res) {
     // });
 
     const userWithVideos = await userTable.findOne({
-      where: { id }, // Match the User by id
+      where: { id: id }, // Match the User by id
       include: [
         {
           model: model.BigVideos, // Include associated BigVideos
-          as: "Bigvideosuser",
-          required: false, // Optional: Include videos even if there are no matches
-          where: Sequelize.literal(
-            `CAST("Bigvideosuser"."userid" AS INTEGER) = ${id}`
-          ),
-
-          // Use the correct alias from your associations
+          as: "Bigvideosuser", // Use the correct alias from your associations
         },
       ],
     });
