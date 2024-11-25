@@ -222,7 +222,7 @@ const getuserVideos = async function (req, res) {
           as: "Bigvideosuser",
           required: false, // Optional: Include videos even if there are no matches
           where: Sequelize.literal(
-            `CAST("Bigvideosuser"."userid" AS INTEGER) = ${id}`
+            `CAST("Users"."id" AS VARCHAR) = "Bigvideosuser"."userid"`
           ),
           // Use the correct alias from your associations
         },
