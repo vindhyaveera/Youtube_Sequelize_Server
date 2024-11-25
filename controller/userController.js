@@ -205,12 +205,12 @@ const getuserVideos = async function (req, res) {
     //   },] // Directly referencing an alias or association
     // });
 
-    const userWithVideos = await userTable.findOne({
+    const userWithVideos = await User.findOne({
       where: { id: id }, // Match the User by id
       include: [
         {
-          model: model.BigVideos, // Include associated BigVideos
-          as: "Bigvideosuser", // Use the correct alias from your associations
+          model: BigVideos, // Include associated BigVideos
+          as: "bigvideos", // Use the correct alias from your associations
         },
       ],
     });
