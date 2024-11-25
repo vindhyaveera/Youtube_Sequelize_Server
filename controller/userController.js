@@ -210,7 +210,7 @@ const getuserVideos = async function (req, res) {
       include: [
         {
           model: model.BigVideos, // Include associated BigVideos
-          as: "bigvideos", // Use the correct alias from your associations
+          as: "Bigvideosuser", // Use the correct alias from your associations
         },
       ],
     });
