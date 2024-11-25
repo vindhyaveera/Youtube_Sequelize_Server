@@ -1,5 +1,9 @@
 const model = require("../models");
 const userTable = model.User;
+const Sequelize = require("sequelize");
+
+const { Op } = Sequelize;
+
 const bigvideos = model.BigVideos;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -206,7 +210,9 @@ const getuserVideos = async function (req, res) {
     // });
 
     const userWithVideos = await userTable.findOne({
-      where: { id: id }, // Match the User by id
+      where: {
+        id: Sequelize.cast(id, "integer"), // Explicitly cast the value to integer
+      }, // Match the User by id
       include: [
         {
           model: model.BigVideos, // Include associated BigVideos
