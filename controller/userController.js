@@ -1,6 +1,6 @@
+const { Sequelize } = require("sequelize");
 const model = require("../models");
 const userTable = model.User;
-
 const bigvideos = model.BigVideos;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -198,6 +198,12 @@ const getuserVideos = async function (req, res) {
   try {
     const id = parseInt(req.params.id, 10); // Convert the ID to an integer
 
+    if (isNaN(id)) {
+      return res.status(400).json({
+        message: "Invalid user ID",
+      });
+    }
+
     // const { id: idParam } = req.params; // Extract the id from the route parameters
     // const id = parseInt(idParam, 10); // Convert the string to an integer
     // // const userWithVideos = await userTable.findOne({
@@ -253,6 +259,8 @@ const getuserShortsVideos = async function (req, res) {
     //   where: { id: id },
     //   include: [Bigvideosuser] // Directly referencing an alias or association
     // });
+
+    
 
     const userWithVideos = await userTable.findOne({
       where: { id: id },
