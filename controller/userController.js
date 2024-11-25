@@ -196,9 +196,11 @@ const loginUser = async function (req, res) {
 
 const getuserVideos = async function (req, res) {
   try {
-    const { id: idParam } = req.params; // Extract the id from the route parameters
-    const id = parseInt(idParam, 10); // Convert the string to an integer
-    // const userWithVideos = await userTable.findOne({
+    const id = parseInt(req.params.id, 10); // Convert the ID to an integer
+
+    // const { id: idParam } = req.params; // Extract the id from the route parameters
+    // const id = parseInt(idParam, 10); // Convert the string to an integer
+    // // const userWithVideos = await userTable.findOne({
     //   where: { id: id },
     //   include: [{
     //     model: model.BigVideos, // Include associated BigVideos
@@ -207,7 +209,7 @@ const getuserVideos = async function (req, res) {
     // });
 
     const userWithVideos = await userTable.findOne({
-      where: { id: id }, // Match the User by id
+      where: { id }, // Match the User by id
       include: [
         {
           model: model.BigVideos, // Include associated BigVideos
