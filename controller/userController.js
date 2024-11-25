@@ -221,9 +221,9 @@ const getuserVideos = async function (req, res) {
           model: model.BigVideos, // Include associated BigVideos
           as: "Bigvideosuser",
           required: false, // Optional: Include videos even if there are no matches
-          where: Sequelize.literal(
-            `CAST("User"."id" AS VARCHAR) = "Bigvideosuser"."userid"`
-          ),
+          where: {
+            userid: id.toString(), // Assuming userid is stored as string
+          },
           // Use the correct alias from your associations
         },
       ],
@@ -259,8 +259,6 @@ const getuserShortsVideos = async function (req, res) {
     //   where: { id: id },
     //   include: [Bigvideosuser] // Directly referencing an alias or association
     // });
-
-    
 
     const userWithVideos = await userTable.findOne({
       where: { id: id },
