@@ -207,20 +207,20 @@ const getuserVideos = async function (req, res) {
     const id = parseInt(req.params.id, 10); // Convert the id to an integer
 
 
-    // const userWithVideos = await userTable.findOne({
-    //   where: { id: id },
-    //   include: [Bigvideosuser] // Directly referencing an alias or association
-    // });
-
     const userWithVideos = await userTable.findOne({
       where: { id: id },
-      include:  [
-        {
-          model: model.BigVideos, // Include associated BigVideos
-          as: "Bigvideosuser", // Use the correct alias from your associations
-        }
-      ], // Include associated videos
+      include: [Bigvideosuser] // Directly referencing an alias or association
     });
+
+    // const userWithVideos = await userTable.findOne({
+    //   where: { id: id },
+    //   include:  [
+    //     {
+    //       model: model.BigVideos, // Include associated BigVideos
+    //       as: "Bigvideosuser", // Use the correct alias from your associations
+    //     }
+    //   ], // Include associated videos
+    // });
 
     res.status(200).json({
       Message: "Bigvideos listed successfully",
