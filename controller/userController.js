@@ -1,4 +1,6 @@
 const { Sequelize } = require("sequelize");
+const { Op } = require("sequelize");
+
 const model = require("../models");
 const userTable = model.User;
 const bigvideos = model.BigVideos;
@@ -222,7 +224,17 @@ const getuserVideos = async function (req, res) {
           as: "Bigvideosuser",
           required: false, // Optional: Include videos even if there are no matches
           where: {
-            userid: id.toString(), // Assuming userid is stored as string
+            // Compare with proper casting using Sequelize operators
+            [Op.and]: [
+              Sequelize.where(
+                Sequelize.cast(
+                  Sequelize.col("Bigvideosuser.userid"),
+                  "INTEGER"
+                ),
+                Op.eq,
+                id
+              ),
+            ],
           },
           // Use the correct alias from your associations
         },
