@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   ShortsVideos.init(
     {
-      userid: DataTypes.STRING,
+      userid: DataTypes.INTEGER,
       img: DataTypes.STRING,
       name: DataTypes.STRING,
       dots: DataTypes.STRING,
