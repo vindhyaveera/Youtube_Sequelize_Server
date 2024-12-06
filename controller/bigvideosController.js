@@ -67,6 +67,32 @@ const viewOne = async function (req, res) {
   }
 };
 
+const viewChannels = async function (req, res) {
+  try {
+    const { channel } = req.params;
+    const response = await bigvideosTable.findAll({
+      where: { channel: channel },
+    });
+    if (response == null) {
+      res.status(200).json({
+        message: "videos in this channels not found in bigvideos",
+        data: response,
+      });
+    } else {
+      res.status(200).json({
+        message: "channels Bigvideos listed succesfully",
+        data: response,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: "Error In Listing channels of bigvideos",
+      error: error.message,
+      errortxt: error,
+    });
+  }
+};
+
 const update = async function (req, res) {
   try {
     const { id } = req.params;
@@ -161,6 +187,7 @@ module.exports = {
   viewOne,
   update,
   deletebigvideos,
+  viewChannels,
   // viewBigVideos,
   getuserVideos,
 };
