@@ -14,5 +14,6 @@ router.post(
 );
 
 router.get("/viewAllAssociate/:userId", watchlaterController.viewAllAssociate);
+router.delete("/delete/:userid/:videosid/:type",watchlaterController.deleteUser);
 
 module.exports = router;

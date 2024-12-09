@@ -1,7 +1,7 @@
 const model = require("../models");
 const watchlater = model.WatchLater;
 const bigvideosTable = model.BigVideos;
-const shortsTable=model.ShortsVideos;
+const shortsTable = model.ShortsVideos;
 const user = model.User;
 
 const createwatchlater = async function (req, res) {
@@ -39,7 +39,9 @@ const getuserwatchlaterVideos = async (req, res) => {
 
     // Validate the input
     if (!ids || !Array.isArray(ids) || ids.length === 0) {
-      return res.status(400).json({ message: "Invalid or missing 'ids' array" });
+      return res
+        .status(400)
+        .json({ message: "Invalid or missing 'ids' array" });
     }
 
     // Fetch videos from the database
@@ -49,17 +51,20 @@ const getuserwatchlaterVideos = async (req, res) => {
 
     // Check if videos were found
     if (!videos.length) {
-      return res.status(404).json({ message: "No videos found for the provided IDs" });
+      return res
+        .status(404)
+        .json({ message: "No videos found for the provided IDs" });
     }
 
     // Send the videos as the response
     res.status(200).json({ data: videos });
   } catch (error) {
     console.error("Error fetching videos:", error); // Log the error for debugging
-    res.status(500).json({ message: "Failed to fetch videos", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch videos", error: error.message });
   }
 };
-
 
 const getuserwatchlaterShortsVideos = async (req, res) => {
   try {
@@ -72,8 +77,6 @@ const getuserwatchlaterShortsVideos = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch videos", error });
   }
 };
-
-
 
 const viewAll = async function (req, res) {
   try {
@@ -149,6 +152,38 @@ const viewAllAssociate = async function (req, res) {
   }
 };
 
+const deleteUser = async function (req, res) {
+  try {
+    const { userid, videosid, type } = req.params; // Extract `type` to determine video type
+    // const id = req.body.id;
+
+    // Determine column to match based on `type`
+    const videoColumn = type === "big" ? "bigVideosId" : "shortVideosId";
+    const response = await watchlater.destroy({
+      where: {
+        userId: userid,
+        [videoColumn]: videosid, // Use computed property to dynamically choose column
+      },
+    });
+    if (response == null) {
+      res.status(200).json({
+        message: "videos not found",
+        data: response,
+      });
+    } else {
+      res.status(200).json({
+        message: "watchlater videos deleted succesfully",
+        data: response,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: "Error In Delete Watchlatervideo",
+      error: error.message,
+      errortxt: error,
+    });
+  }
+};
 
 module.exports = {
   createwatchlater,
@@ -156,4 +191,5 @@ module.exports = {
   getuserwatchlaterVideos,
   getuserwatchlaterShortsVideos,
   viewAllAssociate,
+  deleteUser,
 };
