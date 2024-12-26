@@ -166,6 +166,7 @@ const loginUser = async function (req, res) {
           expiresIn: "24hrs",
         });
         const update = await userTable.update(
+          
           { token: token },
           { where: { id: isexists.id } }
         );
