@@ -15,22 +15,38 @@ const watchlaterRouter = require("./routes/watchlater");
 
 var app = express();
 
-// Sequelize Initialization
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: "postgres", // Use the appropriate database dialect (e.g., 'mysql', 'sqlite', etc.)
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false, // Important for Render's SSL setup
-    },
-  },
-  pool: {
-    max: 10, // Maximum number of connections
-    min: 1,  // Minimum number of connections
-    idle: 10000, // Time (ms) before releasing idle connections
-    acquire: 30000, // Time (ms) to wait for a connection
-  },
-});
+
+const config = require('./config/config.json')[process.env.NODE_ENV || 'development']; // Default to 'development'
+
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  {
+    host: config.host,
+    dialect: config.dialect,
+    port: config.port,
+    dialectOptions: config.dialectOptions, // Include SSL settings
+    logging: false, // Optional: Turn off query logging
+  }
+);
+
+// // Sequelize Initialization
+// const sequelize = new Sequelize(process.env.DATABASE_URL, {
+//   dialect: "postgres", // Use the appropriate database dialect (e.g., 'mysql', 'sqlite', etc.)
+//   dialectOptions: {
+//     ssl: {
+//       require: true,
+//       rejectUnauthorized: false, // Important for Render's SSL setup
+//     },
+//   },
+//   pool: {
+//     max: 10, // Maximum number of connections
+//     min: 1,  // Minimum number of connections
+//     idle: 10000, // Time (ms) before releasing idle connections
+//     acquire: 30000, // Time (ms) to wait for a connection
+//   },
+// });
 
 // Retry Connection Logic
 const retryOptions = { maxRetries: 5, retryDelay: 2000 };
